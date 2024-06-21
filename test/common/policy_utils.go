@@ -157,11 +157,16 @@ func DoCleanupPolicy(policyFile string, templateGVRs ...schema.GroupVersionResou
 // DoRootComplianceTest asserts that the given policy has the given compliance
 // on the root policy on the hub cluster.
 func DoRootComplianceTest(policyName string, compliance policiesv1.ComplianceState) {
+	timeout := DefaultTimeoutSeconds
+	if IsHosted {
+		timeout = DefaultTimeoutSeconds * 2
+	}
+
 	By("Checking if the status of root policy " + policyName + " is " + string(compliance))
 	EventuallyWithOffset(
 		1,
 		GetComplianceState(policyName),
-		DefaultTimeoutSeconds,
+		timeout,
 		1,
 	).Should(Equal(compliance))
 }
