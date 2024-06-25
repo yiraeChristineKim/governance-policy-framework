@@ -159,7 +159,7 @@ func DoCleanupPolicy(policyFile string, templateGVRs ...schema.GroupVersionResou
 func DoRootComplianceTest(policyName string, compliance policiesv1.ComplianceState) {
 	timeout := DefaultTimeoutSeconds
 	if IsHosted {
-		timeout = DefaultTimeoutSeconds * 2
+		timeout = DefaultTimeoutSeconds
 	}
 
 	By("Checking if the status of root policy " + policyName + " is " + string(compliance))
